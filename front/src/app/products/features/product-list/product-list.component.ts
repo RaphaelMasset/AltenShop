@@ -8,6 +8,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { CartService } from 'app/cart.service'; // adapte le chemin
+import { FormsModule } from '@angular/forms';
 
 const emptyProduct: Product = {
   id: 0,
@@ -31,22 +32,33 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [CommonModule,DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent],
+  imports: [CommonModule,FormsModule,DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent],
 })
 export class ProductListComponent implements OnInit {
   private cartService = inject(CartService);
   private readonly productsService = inject(ProductsService);
   //of course the user id need to be check on the back end side
   currentUserEmail = "admin@admin.com";
+  currentPage = 0;
+  rowsPerPage = 10;
 
   public readonly products = this.productsService.products;
 
   public isDialogVisible = false;
   public isCreation = false;
   public readonly editedProduct = signal<Product>(emptyProduct);
+  filterText = '';
+  filteredProducts: Product[] = [];
 
   ngOnInit() {
-    this.productsService.get().subscribe();
+    this.productsService.get().subscribe(() => {
+      this.applyFilter();
+    });
+  }
+  applyFilter() {
+    const filter = this.filterText.toLowerCase().trim();
+    this.filteredProducts = this.products()
+      .filter(product => product.name.toLowerCase().includes(filter));
   }
 
   public onCreate() {
@@ -102,6 +114,11 @@ export class ProductListComponent implements OnInit {
 
   isInCart(product: Product): boolean {
     return this.getQuantityInCart(product) > 0;
+  }
+  onPageChange(event: any) {
+    this.currentPage = event.first / event.rows;
+    this.rowsPerPage = event.rows;
+    // Charger ou filtrer les données si nécessaires (surtout pour serveur)
   }
 
 }

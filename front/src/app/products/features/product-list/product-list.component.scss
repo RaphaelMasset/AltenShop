@@ -30,3 +30,21 @@
   object-fit: cover;
   /* ou background: url('placeholder.png') center center no-repeat; */
 }
+
+.filter-input-container {
+  margin: 1rem auto;
+  max-width: 300px;
+}
+
+.filter-input-container input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-input-container input[type="text"]:focus {
+  border-color: #4a90e2;
+  outline: none;
+}

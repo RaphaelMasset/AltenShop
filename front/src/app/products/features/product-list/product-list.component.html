@@ -1,8 +1,9 @@
 <h1 class="text-center">Liste des produits</h1>
 
 <p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
+<input type="text" pInputText placeholder="Filtrer par nom" [(ngModel)]="filterText" (input)="applyFilter()" />
 
-<p-dataView #dv [value]="products()">
+<p-dataView #dv [value]="filteredProducts.length ? filteredProducts : products()" layout="list" [paginator]="true" [rows]="rowsPerPage" (onPage)="onPageChange($event)">
     <ng-template pTemplate="list" let-products>
         @for (product of products; track product) {
             <p-card class="block mb-2">
