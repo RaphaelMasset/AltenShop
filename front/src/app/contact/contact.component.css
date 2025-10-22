@@ -1,0 +1,15 @@
+
+    .contact-form-container {
+      max-width: 600px;
+      margin: auto;
+      padding: 1rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.85rem;
+    }

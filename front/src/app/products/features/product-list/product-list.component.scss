@@ -1,0 +1,32 @@
+:host {
+    display: block;
+    height: 100%;
+    overflow: auto;
+}
+
+.product {
+  display: flex;
+  flex-direction: row; /* horizontal line */
+  gap: 1rem; /* optional spacing between image and details */
+}
+
+.product .image {
+  flex: 1; /* takes one part of the space */
+  max-width: 100%; /* ensure image container doesn't grow too large */
+  overflow: hidden; /* hide overflow if image is bigger */
+}
+
+.product .product-detail-container {
+  flex: 2; /* takes twice the space of image */
+  display: flex;
+  flex-direction: column; /* vertical stacking of details */
+  justify-content: space-between; /* space out header and footer */
+}
+
+.image {
+  width: 150px;   /* largeur fixe */
+  height: 150px;  /* hauteur fixe */
+  background-color: transparent;
+  object-fit: cover;
+  /* ou background: url('placeholder.png') center center no-repeat; */
+}

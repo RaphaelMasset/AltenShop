@@ -1,0 +1,28 @@
+<div *ngFor="let product of cart()">
+  <p-card class="block mb-2">
+    <div class="product">
+      <img class="image" [src]="'assets/images/' + product.image" [alt]="product.name" />
+      <div class="product-detail-container">
+        <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+        <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+        <div class="font-normal text-sm text-gray-700 mt-1">{{ product.description }}</div>
+        <div class="font-semibold text-md mt-2">Prix : {{ product.price | currency:'EUR':'symbol' }}</div>
+        <div>Quantité disponible : {{ product.quantity }}</div>
+        <div>Statut de stock : {{ product.inventoryStatus }}</div>
+        <div>Note : {{ product.rating }}/5</div>
+        <div>Quantité dans le panier : {{ product.quantity }}</div>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="flex gap-3 mt-1">
+        <p-button
+          *ngIf="product.quantity > 0"
+          severity="danger"
+          label="Supprimer du panier"
+          (click)="removeFromCart(product)">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

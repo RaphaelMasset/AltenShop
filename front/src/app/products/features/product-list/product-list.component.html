@@ -1,0 +1,54 @@
+<h1 class="text-center">Liste des produits</h1>
+
+<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
+
+<p-dataView #dv [value]="products()">
+    <ng-template pTemplate="list" let-products>
+        @for (product of products; track product) {
+            <p-card class="block mb-2">
+                <div class="product">
+                    <img class="image" [src]="'assets/images/' + product.image" alt="{{ product.name }}"/>
+                    <div class="product-detail-container">
+                        <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+                        <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+                        <div class="font-normal text-sm text-gray-700 mt-1">{{ product.description }}</div>
+                        <div class="font-semibold text-md mt-2">Prix : {{ product.price | currency:'EUR':'symbol' }}</div>
+                        <!-- pipre for currency -->
+                        <div>Quantité disponible : {{ product.quantity }}</div>
+                        <div>Statut de stock : {{ product.inventoryStatus }}</div>
+                        <div>Note : {{ product.rating }}/5</div>
+                        <div>Quantite dans le panier {{getQuantityInCart(product)}}</div>
+                    </div>
+                </div>          
+<!---//description  createdAt  updatedAt   category  inventoryStatus rating price  quantity  internalReference??-->                
+                
+
+                <ng-template pTemplate="footer">
+                    <div class="flex gap-3 mt-1">
+                        <p-button *ngIf="currentUserEmail === 'admin@admin.com';" label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
+                        <p-button *ngIf="currentUserEmail === 'admin@admin.com';" label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
+                        <p-button severity="secondary" (click)="addToCart(product)">
+                            Ajouter au panier
+                        </p-button>
+
+                        <p-button *ngIf="getQuantityInCart(product) > 0"
+                                  severity="danger"
+                                  (click)="removeFromCart(product)">
+                                   Supprimer du panier
+                        </p-button>
+                    </div>
+                </ng-template>
+            </p-card>
+        }
+    </ng-template>
+</p-dataView>
+
+<p-dialog [(visible)]="isDialogVisible"
+    [style]="{ width: '50vw' }"
+    header="Ajout/Edition produit">
+    <app-product-form
+        [product]="editedProduct()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+    />
+</p-dialog>
