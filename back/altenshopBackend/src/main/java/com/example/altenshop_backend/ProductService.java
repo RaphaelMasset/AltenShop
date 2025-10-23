@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
-    private final String filePath = "src/main/resources/products.json";
+    private final String filePath = "products.json";
     private List<Product> products = new ArrayList<>();
     //bibliothèque Jackson qui convertit les objets Java en JSON et inversement.
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -56,14 +56,20 @@ public class ProductService {
 
     public synchronized void addProduct(Product product) {
         products.add(product);
+        //automatically set the product id
+        product.setId(products.stream().mapToLong(Product::getId).max().orElse(0L) + 1);
+
         saveProducts();
     }
 
     public synchronized boolean updateProduct(long id, Product product) {
         Optional<Product> existing = getById(id);
         if (existing.isPresent()) {
-            products.remove(existing.get());
-            products.add(product);
+            Product p = existing.get();
+            p.setName(product.getName());
+            p.setDescription(product.getDescription());
+            p.setPrice(product.getPrice());
+            p.setQuantity(product.getQuantity());
             saveProducts();
             return true;
         }

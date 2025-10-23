@@ -48,4 +48,21 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String pdescription) {
+        this.description = pdescription;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int pquantity) {
+        this.quantity = pquantity;
+    }
+        
+
 }
