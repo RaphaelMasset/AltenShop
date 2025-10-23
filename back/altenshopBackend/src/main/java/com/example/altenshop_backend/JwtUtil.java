@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
-
+//@Component allow the class to be @autowired
 @Component
 public class JwtUtil {
 

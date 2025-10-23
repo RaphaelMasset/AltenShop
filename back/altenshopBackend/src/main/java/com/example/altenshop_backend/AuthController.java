@@ -15,12 +15,31 @@ public class AuthController {
     //HTTP POST vers /account
     @PostMapping("/account")
     public ResponseEntity<String> register(@RequestBody User user) {
+         System.out.println("Données reçues: " + user);
+        try {
+            if (user.getEmail() == null || user.getEmail().isEmpty()) {
+                System.out.println("no email");
+                return ResponseEntity.badRequest().body("Email obligatoire");
+            }
 
-        if (userService.findByEmail(user.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("Email déjà utilisé");
+            if (user.getPassword() == null || user.getPassword().isEmpty()) {
+                System.out.println("no pass");
+                return ResponseEntity.badRequest().body("Mot de passe obligatoire");
+            }
+
+            if (userService.findByEmail(user.getEmail()).isPresent()) {
+                System.out.println("email already used");
+                return ResponseEntity.badRequest().body("Email déjà utilisé");
+            }
+
+            // Optionnel : valider les autres champs username, firstname
+            System.out.println("try to add user");
+            userService.addUser(user);
+            return ResponseEntity.ok("Utilisateur créé");
+        } catch (Exception e) {
+            System.out.println("Erreur serveur: " + e.getMessage());
+            return ResponseEntity.status(500).body("Erreur serveur: " + e.getMessage());
         }
-        userService.addUser(user);
-        return ResponseEntity.ok("Utilisateur créé");
     }
 
    @PostMapping("/token")

@@ -1,0 +1,11 @@
+<div class="auth-container">
+  <h2>Créer un compte / Se connecter</h2>
+  <form (submit)="onSubmit()">
+    <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
+    <input type="password" [(ngModel)]="password" name="password" placeholder="Mot de passe" required />
+    <button type="submit">Envoyer</button>
+  </form>
+  <div *ngIf="message">{{ message }}</div>
+</div>
+
+

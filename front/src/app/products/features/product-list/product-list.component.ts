@@ -52,8 +52,10 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.productsService.get().subscribe(() => {
+      console.log('Premier produit reçu :', this.products()[0]);
       this.applyFilter();
     });
+   
   }
   applyFilter() {
     const filter = this.filterText.toLowerCase().trim();
@@ -115,10 +117,16 @@ export class ProductListComponent implements OnInit {
   isInCart(product: Product): boolean {
     return this.getQuantityInCart(product) > 0;
   }
+  
   onPageChange(event: any) {
     this.currentPage = event.first / event.rows;
     this.rowsPerPage = event.rows;
     // Charger ou filtrer les données si nécessaires (surtout pour serveur)
+  }
+
+  onImageError(event: Event) {
+    const element = event.target as HTMLImageElement;
+    element.src = 'assets/images/default.jpg';  // Chemin de ton image par défaut
   }
 
 }

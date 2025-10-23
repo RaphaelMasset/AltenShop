@@ -24,6 +24,7 @@ public class ProductController {
     //paths defined with @GetMapping, @PostMapping
     @GetMapping
     public List<Product> getAllProducts() {
+        System.out.println(productService.getById(1000).toString());
         return productService.getAll();
     }
 
@@ -59,6 +60,7 @@ public class ProductController {
 
         String token = authHeader.replace("Bearer ", "");
         String email = jwtUtil.extractEmail(token);
+        System.out.println("updateProduct method called in ProductController: ");
 
         if (!"admin@admin.com".equals(email)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -88,5 +90,27 @@ public class ProductController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Product> patchUpdateProduct(
+        @RequestHeader("Authorization") String authHeader,
+   
+        @PathVariable long id,
+        @RequestBody Product partialProduct) {
+
+       /*  String token = authHeader.replace("Bearer ", "");
+        String email = jwtUtil.extractEmail(token);
+
+        if (!"admin@admin.com".equals(email)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }*/
+
+        Product updated = productService.updatePartially(id, partialProduct);
+        if (updated == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(updated);
     }
 }

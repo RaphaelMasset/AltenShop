@@ -59,4 +59,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    //debuggage purpose for // System.out.println("Données reçues: " + user);
+    @Override
+    public String toString() {
+        return "User{id=" + id + ", username=" + username + ", firstname=" + firstname 
+            + ", email=" + email + ", password=****}";
+    }
 }

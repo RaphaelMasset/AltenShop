@@ -2,3 +2,13 @@
     overflow: hidden;
     height: 100%;
 }
+
+app-panel-menu {
+  position: relative; 
+  z-index: 0; 
+}
+
+.whiteBack{
+    background-color: white !important;
+    z-index: 1;
+}

@@ -30,7 +30,12 @@ import { PanelMenuModule } from 'primeng/panelmenu';
           label: 'Contact',
           icon: 'pi pi-envelope',
           routerLink: ['/contact'] 
+        },{
+          label: 'Connexion/Inscription',
+          icon: 'pi pi-user',
+          routerLink: ['/auth']
         }
     ]
   }
   
+

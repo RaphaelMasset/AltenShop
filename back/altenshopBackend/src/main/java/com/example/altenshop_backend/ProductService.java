@@ -63,6 +63,7 @@ public class ProductService {
     }
 
     public synchronized boolean updateProduct(long id, Product product) {
+        System.out.println("produit a update : " + product);
         Optional<Product> existing = getById(id);
         if (existing.isPresent()) {
             Product p = existing.get();
@@ -84,5 +85,36 @@ public class ProductService {
             return true;
         }
         return false;
+    }
+
+    public Product updatePartially(Long id, Product partialProduct) {
+        Optional<Product> existingOpt = getById(id);
+        if (existingOpt.isEmpty()) {
+            return null; // unfound
+        }
+        Product existing = existingOpt.get();
+
+        if (partialProduct.getName() != null && !partialProduct.getName().isEmpty()) {
+            existing.setName(partialProduct.getName());
+        }
+        if (partialProduct.getDescription() != null && !partialProduct.getDescription().isEmpty()) {
+            existing.setDescription(partialProduct.getDescription());
+        }
+        if (partialProduct.getImage() != null && !partialProduct.getImage().isEmpty()) {
+            existing.setImage(partialProduct.getImage());
+        }
+        if (partialProduct.getCategory() != null && !partialProduct.getCategory().isEmpty()) {
+            existing.setCategory(partialProduct.getCategory());
+        }
+        if (partialProduct.getPrice() != 0) {
+            existing.setPrice(partialProduct.getPrice());
+        }
+        if (partialProduct.getQuantity() != 0) {
+            existing.setQuantity(partialProduct.getQuantity());
+        }
+     
+        saveProducts();
+
+        return existing;
     }
 }

@@ -8,7 +8,7 @@
         @for (product of products; track product) {
             <p-card class="block mb-2">
                 <div class="product">
-                    <img class="image" [src]="'assets/images/' + product.image" alt="{{ product.name }}"/>
+                    <img class="image" [src]="'assets/images/' + product.image" alt="{{ product.name }}"  (error)="onImageError($event)"/>
                     <div class="product-detail-container">
                         <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
                         <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>

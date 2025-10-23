@@ -13,15 +13,17 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+
+    //gestion des tokens JWT
     @Autowired
     private JwtUtil jwtUtil;
 
-    // Ajouter un produit au panier
+    //manage post request /api/cart/add
     @PostMapping("/add")
     public ResponseEntity<String> addToCart(
             @RequestHeader("Authorization") String authHeader,
             @RequestBody CartItem item) {
-
+        //isolate the token by taking out the bearer part of the header
         String token = authHeader.replace("Bearer ", "");
         String email = jwtUtil.extractEmail(token);
 
